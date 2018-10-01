@@ -21,7 +21,7 @@ class QuestionList extends Component {
     render() {
         const { classes, questionIds } = this.props;
 
-        
+
 
         return (
             <Grid container className={classes.root} alignItems="center" justify="center" spacing={16} >
@@ -39,18 +39,22 @@ class QuestionList extends Component {
     };
 }
 
-function mapStateToProps({questions})  {
-  return {
-    // let qArr = [];
-    //     for (const key in questions) {
-    //         if (questions.hasOwnProperty(key)) {
-    //             // qArr.concat(questions[key]);
-    //             qArr.push(questions[key])
-    //         }
-    //     }
-    questionIds: Object.keys(questions)
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
-  }
+function mapStateToProps({ questions, users, authedUser }, { answered = null })  {
+
+    let qArr = [];
+    for (const key in questions) {
+        if (questions.hasOwnProperty(key)) {
+            qArr.push(questions[key])
+            qArr.sort((a,b) => b.timestamp - a.timestamp);
+        }
+        if(answered !== null)   {
+            qArr.filter((question) => answered === Object.keys(users[authedUser].answers).includes(question.id));
+        }
+    }
+
+    return {
+        questionIds: qArr.map(question => (question.id))
+    }
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(QuestionList));

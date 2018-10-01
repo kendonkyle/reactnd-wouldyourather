@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from './NavBar';
+import ListConainter from './ListContainer';
 import CreateQuestion from './CreateQuestion';
 import Login from './Login';
 import Question from './Question';
@@ -21,30 +22,29 @@ const styles = theme => ({
 
 
 class App extends Component {
-  
+
   componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, authedUser } = this.props;
     return (
       <Router>
-      <div>
+        <div>
         <NavBar />
-        <Route path="/" exact component={Login} />
-        <Route path="/create" component={CreateQuestion} />
-        <Route path="/question/:id" component={Question} />
-        <Route path="/questions" component={ListContainer} />
-        {/* <QuestionList /> */}
-        {/* <Login /> */}
-        {/* <CreateQuestion /> */}
-        {/* <Grid container className={classes.root} alignItems="center" justify="center">
-          <Grid item xs={12} sm={10} md={6}>
-          <Question />
-          </Grid>
-        </Grid> */}
-      </div>
+        {authedUser === null ?
+          <div>
+          <Route path="/" exact component={Login} />
+          </div>
+        : <div>
+          <Route path="/" exact component={ListConainter} />
+          <Route path="/create" component={CreateQuestion} />
+          <Route path="/question/:id" component={Question} />
+          <Route path="/questions" component={ListContainer} />
+          </div>
+        }
+        </div>
       </Router>
     );
   }

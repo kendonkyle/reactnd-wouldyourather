@@ -67,10 +67,10 @@ class ListContainer extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            <QuestionList />
+            <QuestionList answered={false}/>
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            Answered Questions
+            <QuestionList answered={true}/>
           </TabContainer>
         </SwipeableViews>
         </Grid>

@@ -27,7 +27,7 @@ class NavBar extends Component {
 
     render() {
         let { authedUser, classes } = this.props;
-        authedUser = false;
+        // authedUser = false;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
@@ -42,8 +42,8 @@ class NavBar extends Component {
                 Would you Rather
               </Typography>
               <Button component={Link} to="/" color="inherit">Home</Button>
-              <Button component={Link} to="/create" color="inherit">New Question</Button>
-              <Button component={Link} to="/leaderboard" color="inherit">Leader Board</Button>
+              {authedUser && <Button component={Link} to="/create" color="inherit">New Question</Button>}
+              {authedUser && <Button component={Link} to="/leaderboard" color="inherit">Leader Board</Button>}
               {authedUser && (
                 <div>
                   <IconButton

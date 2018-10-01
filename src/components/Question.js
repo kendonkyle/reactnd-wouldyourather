@@ -37,7 +37,7 @@ const styles = theme =>({
 class Question extends Component {
     render() {
 
-        const { classes, question, author } = this.props;
+        const { classes, question, author, authedUser } = this.props;
 
         return (
             <Card>
@@ -71,11 +71,12 @@ class Question extends Component {
     };
 }
 
-function mapStateToProps({ users, questions }, { qid }) {
+function mapStateToProps({ users, questions, authedUser }, { qid }) {
     const question = questions[qid];
     return {
         question: question,
-        author: users[question.author]
+        author: users[question.author],
+        authedUser: users[authedUser]
     }
 }
 

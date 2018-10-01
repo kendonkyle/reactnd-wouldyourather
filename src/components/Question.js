@@ -1,8 +1,13 @@
-import React, { Component } from 'react'
-import {
-    Card, CardContent, Typography,
-    Avatar, withStyles, CardMedia, CardHeader, Button, Grid
-} from '@material-ui/core';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import CardHeader from '@material-ui/core/CardHeader';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme =>({
     card: {
@@ -31,43 +36,28 @@ const styles = theme =>({
 
 class Question extends Component {
     render() {
-        const question1 = { optionOneText: "q1", optionTwoText: "q1", author: "james" };
-        let thistext = question1.optionOneText.substr(0,8);
-        const author = {
-            id: 'sarahedo',
-            name: 'Sarah Edo',
-            avatarURL: 'https://avatars3.githubusercontent.com/u/3703923?s=88&v=4',
-            answers: {
-                "8xf0y6ziyjabvozdd253nd": 'optionOne',
-                "6ni6ok3ym7mf1p33lnez": 'optionOne',
-                "am8ehyc8byjqgar0jgpub9": 'optionTwo',
-                "loxhs1bqm25b708cmbf3g": 'optionTwo'
-            },
-            questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
-        };
-        const { classes, question } = this.props;
+
+        const { classes, question, author } = this.props;
 
         return (
             <Card>
                 <CardHeader className={classes.cardHeader} title={author.name + " asks"} />
                 <div className={classes.card}>
                 <Grid container>
-                <Grid item xs={4}>
-                <CardMedia>
-                    <Avatar
-                        className={classes.avatar}
-                        alt={author.name}
-                        src={author.avatarURL}
-                    />
-                </CardMedia>
+                <Grid item xs={4} sm={4} md={4} className={classes.details}>
+                <Avatar
+                    className={classes.avatar}
+                    alt={author.name}
+                    src={author.avatarURL}
+                />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} sm={6} md={6}>
                 <CardContent className={classes.details}>
                     <Typography variant="headline" className={classes.headline}>
                         Would you rather
                     </Typography>
                     <Typography variant="subheading" className={classes.textlines}>
-                        {'...'+question.optionOne.text.substr(0,8)+'...'}
+                        {'...'+question.optionOne.text.substr(0,12)+'...'}
                     </Typography>
                     <Button variant="outlined" color="secondary">
                     Answer Question
@@ -81,4 +71,12 @@ class Question extends Component {
     };
 }
 
-export default withStyles(styles)(Question);
+function mapStateToProps({ users, questions }, { qid }) {
+    const question = questions[qid];
+    return {
+        question: question,
+        author: users[question.author]
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Question));

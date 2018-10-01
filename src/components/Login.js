@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Paper, Avatar, Typography, FormControl, InputLabel, Input, Button, withStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { LockOutlined as LockIcon } from '@material-ui/icons';
 
 const styles = theme => ({
@@ -74,4 +82,4 @@ class Login extends Component {
     };
 }
 
-export default withStyles(styles)(Login);
+export default connect()(withStyles(styles)(Login));

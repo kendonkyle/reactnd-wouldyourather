@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from './NavBar';
 import CreateQuestion from './CreateQuestion';
 import Login from './Login';
 import Question from './Question';
-import { Grid, withStyles } from '@material-ui/core';
-import QuestionList from './QuestionList';
+// import QuestionList from './QuestionList';
+// import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ListContainer from './ListContainer';
+import { handleInitialData } from '../actions/shared'
 
 const styles = theme => ({
   root: {
@@ -14,13 +18,24 @@ const styles = theme => ({
   }
 });
 
+
+
 class App extends Component {
+  
+  componentDidMount() {
+    this.props.dispatch(handleInitialData());
+  }
+
   render() {
     const { classes } = this.props;
     return (
+      <Router>
       <div>
         <NavBar />
-        <ListContainer />
+        <Route path="/" exact component={Login} />
+        <Route path="/create" component={CreateQuestion} />
+        <Route path="/question/:id" component={Question} />
+        <Route path="/questions" component={ListContainer} />
         {/* <QuestionList /> */}
         {/* <Login /> */}
         {/* <CreateQuestion /> */}
@@ -29,10 +44,16 @@ class App extends Component {
           <Question />
           </Grid>
         </Grid> */}
-
       </div>
+      </Router>
     );
   }
 }
 
-export default withStyles(styles)(App);
+function mapStateToProps({authedUser})  {
+  return {
+    authedUser,
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(App));

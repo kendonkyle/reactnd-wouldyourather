@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 const styles = theme =>({
     card: {
@@ -32,13 +34,31 @@ const styles = theme =>({
         margin: theme.spacing.unit * 2,
         "margin-top": theme.spacing.unit * 4,
         "background-color": "#ddd"
-    }
+    },
+    form: {
+      width: '100%', // Fix IE11 issue.
+      marginTop: theme.spacing.unit,
+    },
 });
 
-class Question extends Component {
+class AnswerQuestion extends Component {
+    state = {
+      value: ""
+    };
+
+    handleAnswerSubmit = (event) => {
+      event.preventDefault();
+      
+    };
+
+    handleRadioClick = event => {
+      event.preventDefault();
+      this.setState({ value: event.target.value });
+    };
+
     render() {
 
-        const { classes, question, author, authedUser } = this.props;
+        const { classes, question, author, authedUser, id } = this.props;
 
         return (
             <Card>
@@ -55,14 +75,25 @@ class Question extends Component {
                 <Grid item xs={6} sm={6} md={6}>
                 <CardContent className={classes.details}>
                     <Typography variant="headline" className={classes.headline}>
-                        Would you rather
+                      Would you rather...
                     </Typography>
-                    <Typography variant="subheading" className={classes.textlines}>
+                    <form className={classes.form}>
+                    <RadioGroup
+                      aria-label="Would you rather ..."
+                      name="rather"
+                      className={classes.group}
+                      value={this.state.value}
+                      onChange={this.handleRadioClick}>
+                    <FormControlLabel value="1" control={<Radio />} label={question.optionOne.text} />
+                    <FormControlLabel value="2" control={<Radio />} label={question.optionTwo.text} />
+                    </RadioGroup>
+                    {/* <Typography variant="subheading" className={classes.textlines}>
                         {'...'+question.optionOne.text.substr(0,12)+'...'}
-                    </Typography>
-                    <Button component={Link} to={"/question/"+question.id} variant="outlined" color="secondary">
-                    Answer Question
+                    </Typography> */}
+                    <Button variant="outlined" color="secondary" onClick="this.handleAnswerSubmit">
+                      Answer Question
                     </Button>
+                    </form>
                 </CardContent>
                 </Grid>
                 </Grid>
@@ -81,4 +112,4 @@ function mapStateToProps({ users, questions, authedUser }, { id }) {
     }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Question));
+export default connect(mapStateToProps)(withStyles(styles)(AnswerQuestion));

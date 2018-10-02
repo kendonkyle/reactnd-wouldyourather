@@ -21,15 +21,13 @@ class QuestionList extends Component {
     render() {
         const { classes, questionIds } = this.props;
 
-
-
         return (
             <Grid container className={classes.root} alignItems="center" justify="center" spacing={16} >
-                <Grid item sx={12} sm={10} md={8}>
+                <Grid item sx={12}>
                 <Grid container className={classes.internalgrid} alignItems="center" justify="center" spacing={16}>
                 {questionIds.map((qid) => (
                     <Grid item key={qid} xs={12} sm={12} md={12}>
-                        <Question qid={qid} />
+                        <Question id={qid} />
                    </Grid>
                 ))}
                 </Grid>
@@ -48,7 +46,9 @@ function mapStateToProps({ questions, users, authedUser }, { answered = null }) 
             qArr.sort((a,b) => b.timestamp - a.timestamp);
         }
         if(answered !== null)   {
-            qArr.filter((question) => answered === Object.keys(users[authedUser].answers).includes(question.id));
+            qArr = qArr.filter((question) => (
+                answered === Object.keys(users[authedUser].answers).includes(question.id))
+            );
         }
     }
 

@@ -12,17 +12,24 @@ import Button from '@material-ui/core/Button';
 
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
+import { setAuthedUser } from '../actions/authedUser';
+
 class NavBar extends Component {
     state = {
         anchorEl: null,
     };
 
     handleMenu = (event) => {
-        this.setState({ anchorEl: event.currentTarget });
+      this.setState({ anchorEl: event.currentTarget });
     };
 
     handleClose = (event) =>  {
-        this.setState({ anchorEl: null });
+      this.setState({ anchorEl: null });
+    };
+    
+    handleLogout = (event) =>  {
+      this.setState({ anchorEl: null });
+      this.props.dispatch(setAuthedUser(null));
     };
 
     render() {
@@ -72,7 +79,7 @@ class NavBar extends Component {
                     onClose={this.handleClose}
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                    <MenuItem id="logout-menu-btn" onClick={this.handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>
               )}

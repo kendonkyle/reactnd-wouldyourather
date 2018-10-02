@@ -24,6 +24,11 @@ const styles = theme => ({
   });
 
 class CreateQuestion extends Component {
+
+    saveQuestion = event => {
+        event.preventDefault();
+        // TODO saveQuestion const { dispatch } = this.props;
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -49,7 +54,9 @@ class CreateQuestion extends Component {
                             <Button
                                 type="submit"
                                 variant="raised"
-                                color="primary">
+                                color="primary"
+                                onClick={this.saveQuestion}
+                                >
                                 <SaveIcon /> Save Question
                             </Button>
                             </form>

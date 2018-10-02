@@ -58,7 +58,7 @@ class Login extends Component {
     handleLogin = event => {
         // const { dispatch } = this.props;
         event.preventDefault();
-        this.props.dispatch(setAuthedUser(this.state.selectedUser))
+        (this.state.selectedUser !== "") && this.props.dispatch(setAuthedUser(this.state.selectedUser));
     }
 
     render() {

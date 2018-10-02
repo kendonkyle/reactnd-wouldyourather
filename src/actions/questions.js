@@ -13,7 +13,7 @@ export function receiveQuestions(questions) {
 
 function addQuestion(question)  {
   return {
-    type: SAVE_QUESTION,
+    type: ADD_QUESTION,
     question,
   }
 }

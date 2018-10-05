@@ -6,10 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
-import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import OptionSummary from './OptionSummary';
 
 const styles = theme => ({

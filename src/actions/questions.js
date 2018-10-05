@@ -1,4 +1,5 @@
-import { saveQuestion } from "../util/api";
+import { saveQuestion, saveQuestionAnswer } from "../util/api";
+import { addUserQuestion, addUserAnswer } from "./users";
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const ADD_QUESTION = 'ADD_QUESTION';
@@ -18,23 +19,33 @@ function addQuestion(question)  {
   }
 }
 
-export function handleSaveQuestion(text, replyingTo) {
+export function handleSaveQuestion(optionOneText, optionTwoText) {
   return (dispatch, getState) =>  {
     const { authedUser } = getState();
-    dispatch(showLoading());
-
-    return saveTweet({
-      text,
-      author: authedUser,
-      replyingTo,
-    }).then((tweet)  =>  dispatch(addTweet(tweet)))
-    .then(()  =>  dispatch(hideLoading()));
+    return saveQuestion({ optionOneText, optionTwoText, author: authedUser }
+      ).then((question)  =>  {
+        dispatch(addQuestion(question));
+        dispatch(addUserQuestion(question));
+      });
   }
 }
 
-export function answerQuestion(info)  {
+export function answerQuestion(answer)  {
   return {
     type: ANSWER_QUESTION,
-    info,
+    answer,
+  }
+}
+
+export function handleSaveAnswer(qid, answer) {
+  return (dispatch, getState) =>  {
+    const { authedUser } = getState();
+
+    return saveQuestionAnswer({ authedUser, qid, answer }
+      ).then(()  =>  {
+        dispatch(answerQuestion({ authedUser, id: qid, answer }));
+        dispatch(addUserAnswer({ authedUser, id: qid, answer }));
+      });
+
   }
 }

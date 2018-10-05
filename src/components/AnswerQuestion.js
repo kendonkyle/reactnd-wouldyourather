@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { handleSaveAnswer } from '../actions/questions';
 
 const styles = theme =>({
     card: {
@@ -43,12 +44,15 @@ const styles = theme =>({
 
 class AnswerQuestion extends Component {
     state = {
-      value: ""
+      value: "",
     };
 
     handleAnswerSubmit = (event) => {
       event.preventDefault();
-      
+      const answer = this.state.value;
+      const { dispatch, id } = this.props;
+      dispatch(handleSaveAnswer(id, answer));
+
     };
 
     handleRadioClick = event => {
@@ -58,7 +62,7 @@ class AnswerQuestion extends Component {
 
     render() {
 
-        const { classes, question, author, authedUser, id } = this.props;
+        const { classes, question, author } = this.props;
 
         return (
             <Card>
@@ -77,20 +81,20 @@ class AnswerQuestion extends Component {
                     <Typography variant="headline" className={classes.headline}>
                       Would you rather...
                     </Typography>
-                    <form className={classes.form}>
+                    <form className={classes.form} required onSubmit={this.handleAnswerSubmit}>
                     <RadioGroup
                       aria-label="Would you rather ..."
                       name="rather"
                       className={classes.group}
                       value={this.state.value}
                       onChange={this.handleRadioClick}>
-                    <FormControlLabel value="1" control={<Radio />} label={question.optionOne.text} />
-                    <FormControlLabel value="2" control={<Radio />} label={question.optionTwo.text} />
+                    <FormControlLabel value="optionOne" control={<Radio />} label={question.optionOne.text} />
+                    <FormControlLabel value="optionTwo" control={<Radio />} label={question.optionTwo.text} />
                     </RadioGroup>
                     {/* <Typography variant="subheading" className={classes.textlines}>
                         {'...'+question.optionOne.text.substr(0,12)+'...'}
                     </Typography> */}
-                    <Button variant="outlined" color="secondary" onClick="this.handleAnswerSubmit">
+                    <Button variant="outlined" color="secondary" type="submit">
                       Answer Question
                     </Button>
                     </form>

@@ -6,7 +6,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -85,7 +84,7 @@ class Login extends Component {
                                     <em>None</em>
                                 </MenuItem>
                                 {users.map((user) => (
-                                    <MenuItem value={user.id}>{user.name}</MenuItem>
+                                    <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>

@@ -26,7 +26,7 @@ class NavBar extends Component {
     handleClose = (event) =>  {
       this.setState({ anchorEl: null });
     };
-    
+
     handleLogout = (event) =>  {
       this.setState({ anchorEl: null });
       this.props.dispatch(setAuthedUser(null));
@@ -49,7 +49,7 @@ class NavBar extends Component {
                 Would you Rather
               </Typography>
               <Button component={Link} to="/" color="inherit">Home</Button>
-              {authedUser && <Button component={Link} to="/create" color="inherit">New Question</Button>}
+              {authedUser && <Button component={Link} to="/add" color="inherit">New Question</Button>}
               {authedUser && <Button component={Link} to="/leaderboard" color="inherit">Leader Board</Button>}
               {authedUser && (
                 <div>
@@ -78,7 +78,6 @@ class NavBar extends Component {
                     open={open}
                     onClose={this.handleClose}
                   >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem id="logout-menu-btn" onClick={this.handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>

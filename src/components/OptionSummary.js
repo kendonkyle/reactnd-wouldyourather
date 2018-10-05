@@ -13,7 +13,7 @@ const styles = theme => ({
     "background-color": "#f500573f",
     padding: theme.spacing.unit *1,
     margin: theme.spacing.unit * 2
-    
+
   },
   resultBackground: {
     // border: "solid 1px",
@@ -30,7 +30,7 @@ class OptionSummary extends Component {
     const { option, authedUser, total, classes } = this.props;
     const answer = option.votes.includes(authedUser.id);
     const optionsPercent = option.votes.length/total*100;
-    return <Paper className={option.votes.includes(authedUser.id) ? classes.yourAnswer : classes.resultBackground} raised>
+    return <Paper className={option.votes.includes(authedUser.id) ? classes.yourAnswer : classes.resultBackground} >
       {
         answer
           ? <Badge className={classes.badge} badgeContent="You" color="primary" >
@@ -46,7 +46,6 @@ class OptionSummary extends Component {
         {optionsPercent}% of people votes this
                   </Typography>
       <LinearProgress className={classes.progressBar}
-        static
         variant="determinate"
         value={optionsPercent}
       />

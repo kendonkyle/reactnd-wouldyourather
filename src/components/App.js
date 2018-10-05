@@ -6,9 +6,10 @@ import CreateQuestion from './CreateQuestion';
 import Login from './Login';
 import QuestionPage from './QuestionPage';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
+// import withStyles from '@material-ui/core/styles/withStyles';
 import ListContainer from './ListContainer';
 import { handleInitialData } from '../actions/shared'
+import LeaderBoard from './LeaderBoard';
 
 class App extends Component {
 
@@ -21,26 +22,27 @@ class App extends Component {
     return (
       <Router>
         <div>
-        <NavBar />
-        {/* <Route path="/question/:id" component={QuestionPage} /> */}
-        {authedUser === null ?
-          <div>
-          <Route path="/" component={Login} />
-          </div>
-        : <div>
-          <Route path="/" exact component={ListConainter} />
-          <Route path="/create" component={CreateQuestion} />
-          <Route path="/question/:id" component={QuestionPage} />
-          <Route path="/questions" component={ListContainer} />
-          </div>
-        }
+          <NavBar />
+          {/* <Route path="/question/:id" component={QuestionPage} /> */}
+          {authedUser === null ?
+            <div>
+              <Route path="/" component={Login} />
+            </div>
+            : <div>
+              <Route path="/" exact component={ListConainter} />
+              <Route path="/add" component={CreateQuestion} />
+              <Route path="/question/:id" component={QuestionPage} />
+              <Route path="/questions" component={ListContainer} />
+              <Route path="/leaderboard" component={LeaderBoard} />
+            </div>
+          }
         </div>
       </Router>
     );
   }
 }
 
-function mapStateToProps({authedUser})  {
+function mapStateToProps({ authedUser }) {
   return {
     authedUser,
   }

@@ -15,94 +15,94 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import { setAuthedUser } from '../actions/authedUser';
 
 class NavBar extends Component {
-    state = {
-        anchorEl: null,
-    };
+  state = {
+    anchorEl: null,
+  };
 
-    handleMenu = (event) => {
-      this.setState({ anchorEl: event.currentTarget });
-    };
+  handleMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
-    handleClose = (event) =>  {
-      this.setState({ anchorEl: null });
-    };
+  handleClose = (event) => {
+    this.setState({ anchorEl: null });
+  };
 
-    handleLogout = (event) =>  {
-      this.setState({ anchorEl: null });
-      this.props.dispatch(setAuthedUser(null));
-    };
+  handleLogout = (event) => {
+    this.setState({ anchorEl: null });
+    this.props.dispatch(setAuthedUser(null));
+  };
 
-    render() {
-        let { authedUser, classes } = this.props;
-        // authedUser = false;
-        const { anchorEl } = this.state;
-        const open = Boolean(anchorEl);
+  render() {
+    let { authedUser, classes } = this.props;
+    // authedUser = false;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
-        return (
-          <div>
-            <AppBar position="static">
-              <Toolbar>
-              {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleMenu}>
+    return (
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleMenu}>
                 <MenuIcon />
               </IconButton> */}
-              <Typography variant="title" color="inherit" className={classes.grow}>
-                Would you Rather
+            <Typography variant="title" color="inherit" className={classes.grow}>
+              Would you Rather
               </Typography>
-              <Button component={Link} to="/" color="inherit">Home</Button>
-              {authedUser && <Button component={Link} to="/add" color="inherit">New Question</Button>}
-              {authedUser && <Button component={Link} to="/leaderboard" color="inherit">Leader Board</Button>}
-              {authedUser && (
-                <div>
-                  <IconButton
-                    aria-owns={open ? 'menu-appbar' : null}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                    <Typography variant="caption" color="inherit">
-                      Hello {authedUser}
-                    </Typography>
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={this.handleClose}
-                  >
-                    <MenuItem id="logout-menu-btn" onClick={this.handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </Toolbar>
-            </AppBar>
-          </div>
-        );
-    };
+            <Button component={Link} to="/" color="inherit">Home</Button>
+            {authedUser && <Button component={Link} to="/add" color="inherit">New Question</Button>}
+            {authedUser && <Button component={Link} to="/leaderboard" color="inherit">Leader Board</Button>}
+            {authedUser && (
+              <div>
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                  <Typography variant="caption" color="inherit">
+                    Hello {authedUser}
+                  </Typography>
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem id="logout-menu-btn" onClick={this.handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  };
 }
 
 const styles = {
-    root: {
-      flexGrow: 1,
-    },
-    grow: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginLeft: -12,
-      marginRight: 20,
-    },
-  };
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
 
-function mapStateToProps({authedUser})  {
+function mapStateToProps({ authedUser }) {
   return {
     authedUser
   }

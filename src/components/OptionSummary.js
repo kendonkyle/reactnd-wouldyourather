@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
   progressBar: {
@@ -25,9 +26,8 @@ const styles = theme => ({
   }
 });
 
-class OptionSummary extends Component {
-  render() {
-    const { option, authedUser, total, classes } = this.props;
+const OptionSummary = props => {
+    const { option, authedUser, total, classes } = props;
     const answer = option.votes.includes(authedUser.id);
     const optionsPercent = option.votes.length/total*100;
     return <Paper className={option.votes.includes(authedUser.id) ? classes.yourAnswer : classes.resultBackground} >
@@ -53,7 +53,11 @@ class OptionSummary extends Component {
         {option.votes.length + " votes out of " + total}
       </Typography>
     </Paper >
-  }
+  };
+OptionSummary.PropTypes = {
+  classes: PropTypes.object.isRequired,
+  option: PropTypes.object.isRequired,
+  AuthedUser: PropTypes.object.isRequired,
+  total: PropTypes.number.isRequired,
 }
-
 export default withStyles(styles)(OptionSummary);

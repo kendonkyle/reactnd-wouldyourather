@@ -12,6 +12,8 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { handleSaveAnswer } from '../actions/questions';
+import ErrorPage from './ErrorPage';
+import PropTypes from 'prop-types';
 
 const styles = theme =>({
     card: {
@@ -50,9 +52,9 @@ class AnswerQuestion extends Component {
     handleAnswerSubmit = (event) => {
       event.preventDefault();
       const answer = this.state.value;
+      if ( answer === "") { return }
       const { dispatch, id } = this.props;
       dispatch(handleSaveAnswer(id, answer));
-
     };
 
     handleRadioClick = event => {
@@ -63,6 +65,9 @@ class AnswerQuestion extends Component {
     render() {
 
         const { classes, question, author } = this.props;
+        if(question === null) {
+          return <ErrorPage />;
+        }
 
         return (
             <Card>
@@ -91,10 +96,7 @@ class AnswerQuestion extends Component {
                     <FormControlLabel value="optionOne" control={<Radio />} label={question.optionOne.text} />
                     <FormControlLabel value="optionTwo" control={<Radio />} label={question.optionTwo.text} />
                     </RadioGroup>
-                    {/* <Typography variant="subheading" className={classes.textlines}>
-                        {'...'+question.optionOne.text.substr(0,12)+'...'}
-                    </Typography> */}
-                    <Button variant="outlined" color="secondary" type="submit">
+                    <Button variant="outlined" color="secondary" type="submit" >
                       Answer Question
                     </Button>
                     </form>
@@ -107,8 +109,19 @@ class AnswerQuestion extends Component {
     };
 }
 
+AnswerQuestion.PropTypes = {
+  authedUser: PropTypes.object.isRequired
+}
+
 function mapStateToProps({ users, questions, authedUser }, { id }) {
     const question = questions[id];
+    if( typeof question === "undefined" )  {
+      return {
+        question: null,
+        author: null,
+        authedUser: users[authedUser]
+      };
+    }
     return {
         question: question,
         author: users[question.author],

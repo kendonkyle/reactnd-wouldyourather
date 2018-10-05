@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './NavBar';
 import ListConainter from './ListContainer';
 import CreateQuestion from './CreateQuestion';
@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import ListContainer from './ListContainer';
 import { handleInitialData } from '../actions/shared'
 import LeaderBoard from './LeaderBoard';
+import ErrorPage from './ErrorPage';
+
 
 class App extends Component {
 
@@ -29,12 +31,16 @@ class App extends Component {
               <Route path="/" component={Login} />
             </div>
             : <div>
-              <Route path="/" exact component={ListConainter} />
-              <Route path="/add" component={CreateQuestion} />
-              <Route path="/question/:id" component={QuestionPage} />
-              <Route path="/questions" component={ListContainer} />
-              <Route path="/leaderboard" component={LeaderBoard} />
+              <Switch>
+                <Route path="/" exact component={ListConainter} />
+                <Route path="/add" component={CreateQuestion} />
+                <Route path="/question/:id" component={QuestionPage} />
+                <Route path="/questions" component={ListContainer} />
+                <Route path="/leaderboard" component={LeaderBoard} />
+                <Route component={ErrorPage} />
+              </Switch>
             </div>
+
           }
         </div>
       </Router>

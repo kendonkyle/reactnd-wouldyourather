@@ -48,31 +48,31 @@ class ListContainer extends React.Component {
 
     return (
       <Grid container className={classes.root} alignItems="center" justify="center" sx={12} >
-      <Grid item xs={12} sm={10} md={8} >
-        <AppBar position="static" color="default">
-          <Tabs
-            value={this.state.value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            fullWidth
+        <Grid item xs={12} sm={10} md={8} >
+          <AppBar position="static" color="default">
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              fullWidth
+            >
+              <Tab label="Unanswered Questions" />
+              <Tab label="Answered Questions" />
+            </Tabs>
+          </AppBar>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={this.state.value}
+            onChangeIndex={this.handleChangeIndex}
           >
-            <Tab label="Unanswered Questions" />
-            <Tab label="Answered Questions" />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <TabContainer dir={theme.direction}>
-            <QuestionList answered={false}/>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <QuestionList answered={true}/>
-          </TabContainer>
-        </SwipeableViews>
+            <TabContainer dir={theme.direction}>
+              <QuestionList answered={false} />
+            </TabContainer>
+            <TabContainer dir={theme.direction}>
+              <QuestionList answered={true} />
+            </TabContainer>
+          </SwipeableViews>
         </Grid>
       </Grid>
     );
